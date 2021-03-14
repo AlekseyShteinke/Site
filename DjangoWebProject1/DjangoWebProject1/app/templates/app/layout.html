@@ -23,7 +23,9 @@
                     <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'list' %}">Список</a></li>
+                    {#{% if user.is_autenticated %}#}
                     <li class="nav-item"><a class="nav-link" href="{% url 'portfolio' %}">Моё портфолио</a></li>
+                    {#{% endif %}#}
                 </ul>
                 {% include 'app/loginpartial.html' %}
             </div>
@@ -32,8 +34,8 @@
 
     <div class="container body-content">
 {% block content %}{% endblock %}
-        <hr/>
-        <footer>
+        <footer class="fixed-bottom">
+            <hr/>
             <p>&copy; {{ year }} - My Django Application</p>
         </footer>
     </div>
