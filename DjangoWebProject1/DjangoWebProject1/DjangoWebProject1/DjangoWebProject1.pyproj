@@ -56,6 +56,7 @@
     <Folder Include="DjangoWebProject1\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\templates\app\create_user.html" />
     <Content Include="app\templates\app\list.html" />
     <Content Include="app\templates\app\portfolio.html" />
     <Content Include="app\templates\app\_portfolio.html" />
