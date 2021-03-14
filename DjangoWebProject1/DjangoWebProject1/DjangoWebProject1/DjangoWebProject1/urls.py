@@ -15,7 +15,6 @@ urlpatterns = [
     path('about/', views.about, name='about'),
     path('list/', views.list, name='list'),
     path('portfolio/', views.portfolio, name='portfolio'),
-    path('create_user/', views.create_user, name='create_user'),
     path('login/',
          LoginView.as_view
          (
