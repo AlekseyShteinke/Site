@@ -4,10 +4,12 @@ Definition of views.
 """
 
 from datetime import datetime
+import email
 from django.shortcuts import render
 from django.http import HttpRequest
 from .models import Pupil
 from .forms import ListSearch
+from .forms import CreateUser
 
 def home(request):
     """Renders the home page."""
@@ -56,16 +58,11 @@ def list(request):
         form=ListSearch(request.POST)
         pupils=[]
         if form.is_valid():
-#            pupils=[]
+
             school=form.cleaned_data['school']
             fio=form.cleaned_data['fio']
             cls=form.cleaned_data['cls']
-            #if school!='' and fio!='':
-            #    pupils=Pupil.objects.filter(school=school,fio__contains=fio)
-            #elif school!='':
-            #    pupils=Pupil.objects.filter(school=school)
-            #elif fio!='':
-            #    pupils=Pupil.objects.filter(fio__contains=fio)
+
             if school!='':
                 pupils= Pupil.objects.filter(school=school)
                 flag=True
@@ -81,14 +78,10 @@ def list(request):
                 else:
                     pupils=Pupil.objects.filter(cls=cls)
                     flag=True
-            #else:
-            #    pupils=[]
-        #else:
-        #    pupils=[];
+
     else:
         form=ListSearch()
-#        pupils = Pupil.objects.all()
-#        pupils = []
+
          
     return render(
         request,
@@ -102,8 +95,6 @@ def list(request):
         }
     )
 
-#def list(request,school):
-#    return 'app/list.html'
 
 def portfolio(request):
     """Renders the portfolio page."""
@@ -119,12 +110,39 @@ def portfolio(request):
     )
 
 def create_user(request):
+    
     """Renders the portfolio page."""
-    assert isinstance(request, HttpRequest)
+    #assert isinstance(request, HttpRequest)
+
+    if request.method == 'POST':
+
+        form = CreateUser(request.POST)
+        if form.is_valid():
+            login = form.cleaned_data['login']
+            password = form.cleaned_data['password']
+            password_corr = form.cleaned_data['password_corr']
+            fio = form.cleaned_data['fio']
+            log_form = BootstrapAuthenticationForm()
+            return render(
+                request,
+                'app/login.html',
+                {
+                    'form':log_form,
+                    'title':'login',
+                    'year':datetime.now().year,
+                }
+            )
+
+
+    else:
+        form = CreateUser()
+
+
     return render(
         request,
         'app/create_user.html',
         {
+            'form':form,
             'title':'create user',
             'message':'Your application description page.',
             'year':datetime.now().year,
